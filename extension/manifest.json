@@ -9,6 +9,7 @@
     "96": "icons/watch-96.png"
   },
   "permissions": [
+    "storage",
     "activeTab",
     "tabs"
   ],

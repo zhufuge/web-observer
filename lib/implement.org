@@ -19,13 +19,14 @@
   - background {}
     - scripts [""]
     - page ""
-  - web_accessible_resources []
+  - web_accessible_resources [""]
 
 * 计划
   - 获取 访问的页面的 url
-  - 保存 该 url 到 storage
-    - browser.storage.sync.set()
-    - browser.storage.sync.get() (Promise)
+  - 保存 该 url 到 storage.local (Promise)
+    - 插件内都可以访问
+    - browser.storage.local.set()
+    - browser.storage.local.get()
   - 设置 browser_action 按钮
     - 点击直接打开新 tab
   - tab 中显示分析界面（图表形式）
@@ -37,7 +38,24 @@
      Started to do it. But it is difficult to find the data about it.
    - State "DONE"       from "HOLD"       [2017-06-11 周日 16:48]
 
+
    1. 设置 browser_action 按钮
    2. background 为按钮添加监听器 browser.browserAction.onClicked.addEventListener()
    3. 事件里，通过 browser.tabs.create({url: '...'}) 设置打开的页面
    4. 页面资源通过 web_accessible_resources 设置在插件中
+
+** DONE 获取访问页面的url
+   CLOSED: [2017-06-11 周日 21:05]
+   - State "DONE"       from "HOLD"       [2017-06-11 周日 21:05]
+   - State "HOLD"       from "TODO"       [2017-06-11 周日 20:03]
+
+
+   browser.tabs.onUpdated.addListener()
+   - 打开一个新标签时， url 一般为 about:newtab ，所以不能监听 onCreated
+   - 回调 (tabId, changeInfo, tabInfo)
+   - 访问一个网站，分多个阶段， onUpdated 会出现多次
+   - 只有一个阶段会出现 changeInfo.url 属性
+
+** TODO 记录活跃标签的访问时间
+
+** TODO 图表分析
