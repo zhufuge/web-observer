@@ -1,0 +1,43 @@
+* 基础
+  - manifest.json
+** manifest.json
+   ^ 为必要， 其余可选
+  - ^manifest_version 2 (必须为2)
+  - ^version ""
+  - ^name ""
+  - author ""
+  - description ""
+  - homepage_url ""
+  - icons {}
+    - "48" ""
+    - "96" ""
+  - permissions [""](需要使用的 API 的权限)
+  - browser_action {}
+    - default_icon ""
+    - default_title ""
+    - default_popup ""
+  - background {}
+    - scripts [""]
+    - page ""
+  - web_accessible_resources []
+
+* 计划
+  - 获取 访问的页面的 url
+  - 保存 该 url 到 storage
+    - browser.storage.sync.set()
+    - browser.storage.sync.get() (Promise)
+  - 设置 browser_action 按钮
+    - 点击直接打开新 tab
+  - tab 中显示分析界面（图表形式）
+
+* 问题
+** DONE 点击 browser_action 打开新页面（页面为插件内设）
+   CLOSED: [2017-06-11 周日 16:48]
+   - State "HOLD"       from "TODO"       [2017-06-11 周日 16:12] \\
+     Started to do it. But it is difficult to find the data about it.
+   - State "DONE"       from "HOLD"       [2017-06-11 周日 16:48]
+
+   1. 设置 browser_action 按钮
+   2. background 为按钮添加监听器 browser.browserAction.onClicked.addEventListener()
+   3. 事件里，通过 browser.tabs.create({url: '...'}) 设置打开的页面
+   4. 页面资源通过 web_accessible_resources 设置在插件中
