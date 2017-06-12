@@ -1,0 +1,13 @@
+{
+  "name": "web-observer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "url": "git@github.com:zhufuge/web-observer.git",
+    "type": "git"
+  },
+  "author": "zhufuge",
+  "dependencies": {
+    "chart.js": "^2.6.0"
+  }
+}
