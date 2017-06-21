@@ -11,16 +11,26 @@
 
 (() => {
   // url storage
+  const ignore = [
+    "localhost"
+  ];
 
   const HOST_REGEXP = /^(?:https|http):\/\/([^\/]+)\/*/;
   const onError = e => console.log(e);
+
+  function ignoreHost(host) {
+    for (let item of ignore) {
+      if (host.includes(item)) return ture;
+    }
+    return false;
+  }
 
   function handleUpdated(tabId, changeInfo, tabInfo) {
     if (changeInfo.url === void 0) return ;
     const match = HOST_REGEXP.exec(changeInfo.url);
     if (match === null) return ;
-
     const curHost = match[1];
+    if (ignoreHost(curHost)) return ;
     const getting = browser.storage.local.get(curHost);
 
     getting
