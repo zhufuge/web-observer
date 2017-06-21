@@ -22,14 +22,18 @@
   - web_accessible_resources [""]
 
 * 计划
+** background
   - 获取 访问的页面的 url
   - 保存 该 url 到 storage.local (Promise)
     - 插件内都可以访问
     - browser.storage.local.set()
     - browser.storage.local.get()
+** Interface
   - 设置 browser_action 按钮
     - 点击直接打开新 tab
   - tab 中显示分析界面（图表形式）
+  - 界面使用 react + antd
+  - 图表使用 chart.js
 
 * 问题
 ** DONE 点击 browser_action 打开新页面（页面为插件内设）
@@ -57,5 +61,4 @@
    - 只有一个阶段会出现 changeInfo.url 属性
 
 ** TODO 记录活跃标签的访问时间
-
 ** TODO 图表分析

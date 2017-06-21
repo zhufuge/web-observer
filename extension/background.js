@@ -12,32 +12,25 @@
 (() => {
   // url storage
 
-  const HOST_REGEXP = /:\/\/([^\/]+)\//;
+  const HOST_REGEXP = /^(?:https|http):\/\/([^\/]+)\/*/;
   const onError = e => console.log(e);
 
   function handleUpdated(tabId, changeInfo, tabInfo) {
-    if (changeInfo.url) {
-      const curHost = HOST_REGEXP.exec(changeInfo.url)[1];
-      console.log(curHost);
+    if (changeInfo.url === void 0) return ;
+    const match = HOST_REGEXP.exec(changeInfo.url);
+    if (match === null) return ;
 
-      const getting = browser.storage.local.get(curHost);
-      console.log(getting);
-      getting
-        .catch(onError)
-        .then(item => {
-          const times = item[curHost] || 0;
-          return browser.storage.local.set({[curHost]: times + 1});
-        })
-        .catch(onError);
-    }
+    const curHost = match[1];
+    const getting = browser.storage.local.get(curHost);
+
+    getting
+      .catch(onError)
+      .then(item => {
+        const times = item[curHost] || 0;
+        return browser.storage.local.set({[curHost]: times + 1});
+      })
+      .catch(onError);
   }
 
   browser.tabs.onUpdated.addListener(handleUpdated);
-
-  function handleRemoved(tabId, removeInfo) {
-    const curTime = new Date();
-    console.log(curTime);
-  }
-
-  browser.tabs.onRemoved.addListener(handleRemoved);
 })();

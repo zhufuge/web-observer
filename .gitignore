@@ -3,3 +3,8 @@
 node_modules/
 npm-debug.log
 yarn-error.log
+
+# library
+extension/lib/
+extension/index.js
+extension/index.css

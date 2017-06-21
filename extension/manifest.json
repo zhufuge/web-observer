@@ -22,7 +22,10 @@
   },
   "web_accessible_resources": [
     "index.html",
+    "index.css",
     "index.js",
-    "index.css"
+    "lib/Chart.min.js",
+    "lib/react.min.js",
+    "lib/react-dom.min.js"
   ]
 }
