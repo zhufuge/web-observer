@@ -26,6 +26,7 @@
     "lib/index.js",
     "lib/Chart.min.js",
     "lib/react.min.js",
-    "lib/react-dom.min.js"
+    "lib/react-dom.min.js",
+    "lib/moment.min.js"
   ]
 }

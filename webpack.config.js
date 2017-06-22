@@ -12,7 +12,8 @@ module.exports = {
 
   externals: {
     'react': 'React',
-    'react-dom': 'ReactDOM'
+    'react-dom': 'ReactDOM',
+    'moment': 'moment'
   },
 
   module: {
@@ -30,7 +31,7 @@ module.exports = {
   },
 
   devServer: {
-    contentBase: resolve(__dirname, 'extension/lib'),
+    contentBase: resolve(__dirname, 'extension'),
     publicPath: '/',
     port: 3000,
     compress: true,

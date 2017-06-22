@@ -70,8 +70,7 @@ function drawChart(canvas) {
 
 function draw(canvas) {
   if (browser) {
-    const getting = browser.storage.local.get('url');
-    getting
+    browser.storage.local.get('url')
       .then(drawChart(canvas))
       .catch(e => console.log(e));
   }
