@@ -1,24 +1,33 @@
 import React from 'react';
 
-import drawChart from '../common/draw';
+import draw from '../common/draw';
+
+function dateChunk(div) {
+  if (browser) {
+    browser.storage.local.get()
+      .then(item => {
+        let s = '';
+        for (let i in item) {
+          if (!s) s += i;
+          s += ' || ' + i + ':' + item[i];
+        }
+        div.innerHTML = s;
+      })
+      .catch(e => console.log(e));
+  }
+}
 
 export default
 class MainContent extends React.Component {
-  drawCanvas(canvas) {
-    if (browser) {
-      const getting = browser.storage.local.get();
-      getting
-        .then(drawChart(canvas))
-        .catch(e => console.log(e));
-    }
-  }
   render() {
     return (
       <div>
         <div style={styles.cvsContainer}>
           <canvas
-            ref={this.drawCanvas}
+            ref={draw}
             width="200" height="100"/>
+        </div>
+        <div ref={dateChunk}>
         </div>
       </div>
     );

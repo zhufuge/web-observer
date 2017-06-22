@@ -48,8 +48,8 @@
    3. 事件里，通过 browser.tabs.create({url: '...'}) 设置打开的页面
    4. 页面资源通过 web_accessible_resources 设置在插件中
 
-** DONE 获取访问页面的url
-   CLOSED: [2017-06-11 周日 21:05]
+** TODO 获取访问页面的url
+   - State "TODO"       from "DONE"       [2017-06-21 周三 23:59]
    - State "DONE"       from "HOLD"       [2017-06-11 周日 21:05]
    - State "HOLD"       from "TODO"       [2017-06-11 周日 20:03]
 
@@ -60,5 +60,22 @@
    - 访问一个网站，分多个阶段， onUpdated 会出现多次
    - 只有一个阶段会出现 changeInfo.url 属性
 
+   !! 或许可以访问 浏览器访问历史
+
+** DONE 获取浏览器开启时间
+   SCHEDULED: <2017-06-21 周三>
+   - State "DONE"       from "HOLD"       [2017-06-22 周四 14:52]
+   - State "HOLD"       from "TODO"       [2017-06-21 周三 23:54]
+
+     
+     - 开启：browse.windows.onCreated
+     - 关闭：browse.windows.onRemoved
+
+
+*** 时间处理上的麻烦
+    Date
+    - 浏览器上的 toLocaleTimeString 与 node 不同， node 上应该是加了 'en-GB' 参数的
 ** TODO 记录活跃标签的访问时间
+   SCHEDULED: <2017-06-21 周三>
 ** TODO 图表分析
+   SCHEDULED: <2017-06-21 周三>

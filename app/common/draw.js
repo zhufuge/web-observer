@@ -37,9 +37,9 @@ function getGroupColor(total, colorset) {
 }
 
 function drawChart(canvas) {
-  return function(chunk) {
+  return function(item) {
     const ctx = canvas.getContext('2d'),
-          {labels, data} = extractTop(chunk, 12),
+          {labels, data} = extractTop(item.url, 12),
           backgroundColor = getGroupColor(data.length, COLORS),
           borderColor = getGroupColor(data.length, BORDER_COLORS);
 
@@ -68,4 +68,13 @@ function drawChart(canvas) {
   };
 }
 
-module.exports = drawChart;
+function draw(canvas) {
+  if (browser) {
+    const getting = browser.storage.local.get('url');
+    getting
+      .then(drawChart(canvas))
+      .catch(e => console.log(e));
+  }
+}
+
+module.exports = draw;

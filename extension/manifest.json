@@ -18,12 +18,12 @@
     "default_title": "Web Observer"
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background/index.js", "background/storage.js"]
   },
   "web_accessible_resources": [
     "index.html",
-    "index.css",
-    "index.js",
+    "lib/index.css",
+    "lib/index.js",
     "lib/Chart.min.js",
     "lib/react.min.js",
     "lib/react-dom.min.js"

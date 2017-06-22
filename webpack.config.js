@@ -6,7 +6,7 @@ module.exports = {
   entry: __dirname + '/app/index.js',
   output: {
     filename: 'index.js',
-    path: resolve(__dirname, 'extension'),
+    path: resolve(__dirname, 'extension/lib'),
     publicPath: '/'
   },
 
@@ -30,7 +30,7 @@ module.exports = {
   },
 
   devServer: {
-    contentBase: resolve(__dirname, 'extension'),
+    contentBase: resolve(__dirname, 'extension/lib'),
     publicPath: '/',
     port: 3000,
     compress: true,
