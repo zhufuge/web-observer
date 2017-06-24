@@ -18,42 +18,58 @@ function time2Number(time) {
 }
 
 function toLineSet(array) {
-  const DAY = 60 * 60 * 24 - 1;
-  const data = [];
+  const HALF_DAY = 60 * 60 * 12;
 
+  let isStart0 = [false, false];
+  if (array[0].length === 1) {
+    array[0].unshift('00:00:00');
+    isStart0[0] = true;
+  }
+
+  const len = array.length;
+  if (array[len - 1].length === 1) {
+    array[len - 1].push('23:59:59');
+  }
+
+  const data = [[], []];
   let last = 0, temp = 0;
   for (let time of array) {
-    if (!data) {
-      if (time.length === 1) {
-        last = time2Number(time[0]);
-        data.push(last);
+    for (let i = 0; i < 2; i++) {
+      temp = last;
+      last = time2Number(time[i]);
+      if (last < HALF_DAY) {
+        data[0].push(last - temp);
       } else {
-        temp = time2Number(time[0]);
-        last = time2Number(time[1]);
-        data.push(temp);
-        data.push(last - temp);
-      }
-    } else {
-      for (let i = 0; i < 2; i++) {
-        temp = last;
-        last = time2Number(time[i]);
-        data.push(last - temp);
+        if (temp < HALF_DAY) {
+          temp = HALF_DAY;
+          if (i === 1) isStart0[1] = true;
+        }
+        data[1].push(last - temp);
       }
     }
   }
 
-  data.push(DAY - last);
+  if (isStart0[0]) data[0].shift();
 
-  return data;
+  for (let i = 0; i < 2; i++) {
+    const sum = data[i].reduce((s, v) => s + v, 0);
+    if (sum !== HALF_DAY) {
+      data[i].push(HALF_DAY - sum);
+    }
+  }
+
+  return [data[0], data[1], isStart0[0], isStart0[1]];
 }
 
 const NOTUSE = '未启用时间',
       USE = '启用时间',
       GRAY = 'rgba(0, 0, 0, 0.1)',
-      ACTIVE = 'rgba(255, 99, 132, 0.8)';
+      RED = 'rgba(255, 99, 132, 0.8)',
+      YELLOW = 'rgba(255, 206, 86, 0.8)';
 
-function getColors(length, isStart0) {
-  const colors = [];
+function getColors(length, isStart0, i) {
+  const colors = [],
+        ACTIVE = i === 0 ? RED : YELLOW;
   for (let i = 0; i < length; i++) {
     if (i % 2 === 0) {
       colors.push(isStart0 ? ACTIVE : GRAY);
@@ -78,34 +94,35 @@ function getLabels(length, isStart0) {
   return labels;
 }
 
-function drawChart(canvas, date) {
+function drawDoughnut(c1, c2, date) {
   return function(item) {
-    const ctx = canvas.getContext('2d');
-    let myChart;
+    const ctx = [
+      c1.getContext('2d'),
+      c2.getContext('2d')
+    ];
+
+    const myChart = [],
+          data = [];
+    let isStart0 = [false, false];
     if (Object.keys(item).length !== 0) {
-      const data = toLineSet(item[date]),
-            isStart0 = item[date][0].length === 1,
-            labels = getLabels(data.length,isStart0),
-            colors = getColors(data.length, isStart0);
-      myChart = new Chart(ctx, {
+      [data[0], data[1], isStart0[0], isStart0[1]] = toLineSet(item[date]);
+    } else {
+      data[0] = [1];
+      data[1] = [1];
+    }
+
+    for (let i = 0; i < 2; i++) {
+      const labels = getLabels(data[i].length, isStart0[i]),
+            colors = getColors(data[i].length, isStart0[i], i);
+
+      myChart[i] = new Chart(ctx[i], {
         type: 'doughnut',
         data: {
           labels,
           datasets: [{
             label: 'times',
-            data,
+            data: data[i],
             backgroundColor: colors,
-          }]
-        }
-      });
-    } else {
-      myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ['未启用时间'],
-          datasets: [{
-            label: 'times',
-            data: [1],
           }]
         }
       });
@@ -113,10 +130,10 @@ function drawChart(canvas, date) {
   };
 }
 
-function timeDraw(canvas, date) {
+function timeDraw(c1, c2, date) {
   if (browser) {
     browser.storage.local.get(date)
-      .then(drawChart(canvas, date))
+      .then(drawDoughnut(c1, c2, date))
       .catch(e => console.log(e));
   }
 }

@@ -7,7 +7,7 @@ class SiderContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: props.item
+      current: props.tab
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -24,24 +24,25 @@ class SiderContent extends React.Component {
           <Icon type="eye" style={styles.eyeIcon}/>
           <div style={styles.title}>Web Observer</div>
         </div>
-        <div style={styles.divider}></div>
         <Menu
-          theme="dark"
+          theme="light"
           onClick={this.handleClick}
           selectedKeys={[this.state.current]}
           inlineIndent={0}
           mode="inline">
           <Item key="1" style={styles.item}>
-            <Icon type="retweet" style={styles.icon}/> 次数
+            <Icon type="retweet" style={styles.icon}/>
+            <span style={styles.itemText}>次 数</span>
           </Item>
           <Item key="2" style={styles.item}>
-            <Icon type="hourglass" style={styles.icon}/> 时间
+            <Icon type="hourglass" style={styles.icon}/>
+            <span style={styles.itemText}>时 间</span>
           </Item>
           <Item key="3" style={styles.item}>
-            <Icon type="calendar" style={styles.icon}/> 总体
+            <Icon type="calendar" style={styles.icon}/>
+            <span style={styles.itemText}>总 体</span>
           </Item>
         </Menu>
-        <div style={styles.footer}>zhufuge ©2017</div>
       </div>
     );
   }
@@ -55,6 +56,7 @@ const styles = {
     margin: '32px 0',
     width: '100%',
     textAlign: 'center',
+    borderRight: '1px solid #e9e9e9',
   },
   eyeIcon: {
     fontSize: 56,
@@ -74,17 +76,12 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     height: 56,
+  },
+  itemText: {
     fontSize: 18,
+    marginLeft: 10,
   },
   icon: {
     fontSize: 26,
   },
-  footer: {
-    width: '100%',
-    textAlign: 'center',
-    color: '#fff',
-    position: 'absolute',
-    bottom: 20,
-    fontSize: 14,
-  }
 };

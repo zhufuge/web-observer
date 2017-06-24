@@ -3,8 +3,6 @@ import { Layout } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 
 import moment from 'moment';
-import 'moment/locale/zh-cn';
-moment.locale('zh-cn');
 
 import SiderContent from './components/SiderContent';
 import MainContent from './components/MainContent';
@@ -14,7 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tab: '2'
+      tab: '1'
     };
     this.changeTab = this.changeTab.bind(this);
   }
@@ -23,18 +21,27 @@ class App extends React.Component {
   }
   render() {
     return (
-      <Layout style={{height: '100%'}}>
-        <Sider width={260}>
-          <SiderContent
-            item={this.state.tab}
-            onSelected={this.changeTab}/>
-        </Sider>
-        <Layout>
-          <Header style={{background: '#fff'}}></Header>
-          <Content>
-            <MainContent item={this.state.tab}/>
-          </Content>
-        </Layout>
+      <Layout style={{ height: '100%' }}>
+        <Header style={{ background: '#fff' }}></Header>
+        <Content style={{ padding: '20px 50px' }}>
+          <Layout>
+            <Sider
+              breakpoint="lg"
+              collapsedWidth="0"
+              width={240}
+              style={{ background: '#fff' }}>
+              <SiderContent
+                tab={this.state.tab}
+                onSelected={this.changeTab}/>
+            </Sider>
+            <Content style={{ overflow: 'hidden' }}>
+              <MainContent tab={this.state.tab}/>
+            </Content>
+          </Layout>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>
+          zhufuge ©2017
+        </Footer>
       </Layout>
     );
   }

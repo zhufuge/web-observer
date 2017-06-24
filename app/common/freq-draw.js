@@ -37,7 +37,7 @@ function getGroupColor(total, colorset) {
 }
 
 function drawChart(canvas) {
-  return function(item) {
+  return !canvas ? {} : function(item) {
     const ctx = canvas.getContext('2d'),
           {labels, data} = extractTop(item.url, 12),
           backgroundColor = getGroupColor(data.length, COLORS),
