@@ -21,6 +21,7 @@ function toLineSet(array) {
   const HALF_DAY = 60 * 60 * 12;
 
   let isStart0 = [false, false];
+
   if (array[0].length === 1) {
     array[0].unshift('00:00:00');
     isStart0[0] = true;
@@ -30,6 +31,14 @@ function toLineSet(array) {
   if (array[len - 1].length === 1) {
     array[len - 1].push('23:59:59');
   }
+
+  for (let i = 0; i < len; i++) {
+    if (array[i].length === 1){
+      array.splice(i, 1);
+    }
+  }
+
+
 
   const data = [[], []];
   let last = 0, temp = 0;

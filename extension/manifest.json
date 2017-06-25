@@ -1,9 +1,10 @@
 {
   "manifest_version": 2,
   "name": "web-observer",
-  "version": "1.0",
+  "version": "1.0.1",
   "author": "zhufuge",
   "description": "Observe what you are browsing",
+  "homepage_url": "https://github.com/zhufuge/web-observer",
   "icons": {
     "48": "icons/watch-48.png",
     "96": "icons/watch-96.png"

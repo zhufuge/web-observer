@@ -1,12 +1,12 @@
 import React from 'react';
 
-import FreqTab from './FreqTab';
+import VisitTab from './VisitTab';
 import TimeTab from './TimeTab';
 
 export default
 class MainContent extends React.Component {
   render() {
-    const tab = this.props.tab === '1' ? <FreqTab /> : <TimeTab />;
+    const tab = this.props.tab === '1' ? <VisitTab /> : <TimeTab />;
     return (
       <div style={styles.container}>
         {tab}

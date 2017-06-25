@@ -56,16 +56,23 @@ const onError = e => console.log(`Error: ${e}`);
   }
 
   browser.tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => {
-    if (changeInfo.url === void 0) return ;
-    const match = HOST_REGEXP.exec(changeInfo.url);
+    if (changeInfo.status !== 'complete') return ;
+
+    const match = HOST_REGEXP.exec(tabInfo.url);
     if (match === null) return ;
+
     const curHost = match[1];
     if (ignoreHost(curHost)) return ;
 
     browser.storage.local.get('url')
       .then(item => {
         const url = item.url || {};
-        url[curHost] = url[curHost] + 1 || 1;
+        url[curHost] = url[curHost] || {};
+
+        const hostObj = url[curHost];
+        hostObj.title = tabInfo.title;
+        hostObj.times = hostObj.times + 1 || 1;
+
         return browser.storage.local.set({url});
       })
       .catch(onError);

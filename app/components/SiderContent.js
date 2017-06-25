@@ -32,15 +32,15 @@ class SiderContent extends React.Component {
           mode="inline">
           <Item key="1" style={styles.item}>
             <Icon type="retweet" style={styles.icon}/>
-            <span style={styles.itemText}>次 数</span>
+            <span style={styles.itemText}>网站记录</span>
           </Item>
           <Item key="2" style={styles.item}>
             <Icon type="hourglass" style={styles.icon}/>
-            <span style={styles.itemText}>时 间</span>
+            <span style={styles.itemText}>时间记录</span>
           </Item>
           <Item key="3" style={styles.item}>
             <Icon type="calendar" style={styles.icon}/>
-            <span style={styles.itemText}>总 体</span>
+            <span style={styles.itemText}>总体记录</span>
           </Item>
         </Menu>
       </div>

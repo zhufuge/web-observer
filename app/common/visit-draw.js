@@ -14,12 +14,14 @@ function extractTop(obj, max) {
   for (let key in obj) {
     items.push([key, obj[key]]);
   }
-  items.sort((a, b) => b[1] - a[1]);
+  items.sort((a, b) => b[1].times - a[1].times);
 
   const labels = [], data = [];
-  for (let i = 0; i < items.length && i < max; i++) {
-    labels.push(items[i][0]);
-    data.push(items[i][1]);
+  for (let item of items) {
+    if (data.length === max) break;
+    const title = item[1].title;
+    labels.push([item[0], title]);
+    data.push(item[1].times);
   }
   return {labels, data};
 }
@@ -39,12 +41,12 @@ function getGroupColor(total, colorset) {
 function drawChart(canvas) {
   return !canvas ? {} : function(item) {
     const ctx = canvas.getContext('2d'),
-          {labels, data} = extractTop(item.url, 12),
+          { labels, data } = extractTop(item.url, 10),
           backgroundColor = getGroupColor(data.length, COLORS),
           borderColor = getGroupColor(data.length, BORDER_COLORS);
 
     const myChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'horizontalBar',
       data: {
         labels,
         datasets: [{
@@ -57,7 +59,7 @@ function drawChart(canvas) {
       },
       options: {
         scales: {
-          yAxes: [{
+          xAxes: [{
             ticks: {
               beginAtZero:true
             }

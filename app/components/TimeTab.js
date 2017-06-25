@@ -38,7 +38,7 @@ class TimeTab extends React.Component {
       </div>
     );
     return (
-      <Card title={datePicker} bodyStyle={{ height: '100%', width: '100%'}}>
+      <Card title={datePicker}>
         <Row>
           <Col span={12}>
             <canvas ref="c1" width="100" height="75"/>
