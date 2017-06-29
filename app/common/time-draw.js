@@ -22,23 +22,12 @@ function toLineSet(array) {
 
   let isStart0 = [false, false];
 
-  if (array[0].length === 1) {
-    array[0].unshift('00:00:00');
-    isStart0[0] = true;
-  }
-
   const len = array.length;
-  if (array[len - 1].length === 1) {
-    array[len - 1].push('23:59:59');
-  }
-
   for (let i = 0; i < len; i++) {
     if (array[i].length === 1){
       array.splice(i, 1);
     }
   }
-
-
 
   const data = [[], []];
   let last = 0, temp = 0;
@@ -105,19 +94,19 @@ function getLabels(length, isStart0) {
 
 function drawDoughnut(c1, c2, date) {
   return function(item) {
+    const allData = item.bTime[date];
+
     const ctx = [
       c1.getContext('2d'),
       c2.getContext('2d')
     ];
 
     const myChart = [],
-          data = [];
-    let isStart0 = [false, false];
-    if (Object.keys(item).length !== 0) {
-      [data[0], data[1], isStart0[0], isStart0[1]] = toLineSet(item[date]);
-    } else {
-      data[0] = [1];
-      data[1] = [1];
+          data = [[1], [1]],
+          isStart0 = [false, false];
+
+    if (allData !== void 0) {
+      [data[0], data[1], isStart0[0], isStart0[1]] = toLineSet(allData);
     }
 
     for (let i = 0; i < 2; i++) {
@@ -141,7 +130,7 @@ function drawDoughnut(c1, c2, date) {
 
 function timeDraw(c1, c2, date) {
   if (browser) {
-    browser.storage.local.get(date)
+    browser.storage.local.get('bTime')
       .then(drawDoughnut(c1, c2, date))
       .catch(e => console.log(e));
   }

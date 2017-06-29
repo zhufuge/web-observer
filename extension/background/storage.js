@@ -1,43 +1,65 @@
+const bsl = browser.storage.local;
 const onError = e => console.log(`Error: ${e}`);
 
 (() => {
-  function storageDate(dateTime, isStart) {
-    const date = dateTime.toLocaleDateString(),
-          time = dateTime.toLocaleTimeString('en-GB');
-
-    const storageTime = (item) => {
-      const item_date = item[date];
-      if (isStart) {
-        item_date.push([time]);
-      } else {
-        item_date[item_date.length - 1].push(time);
+  const ITEMS = ['bTime', 'url'];
+  bsl.get()
+    .then(item => {
+      for (let i of ITEMS) {
+        if (item[i] === void 0) {
+          item[i] = {};
+        }
       }
-      return browser.storage.local.set({[date]: item_date});
-    };
+      return bsl.set(item);
+    })
+    .catch(onError);
+})();
 
-    return browser.storage.local.get(date)
-      .then(item => item[date]
-            ? storageTime(item)
-            : browser.storage.local.set({[date]: [[time]]}))
+(() => {
+
+  let open_date;
+
+  function storage(fn) {
+    return bsl.get('bTime')
+      .then(fn)
       .catch(onError);
-  };
+  }
 
-  let number = 0;
-  const info = d => console.log(`number:${number} time:${d.toLocaleString()}`);
+  function start(item) {
+    const now = new Date(),
+          date = now.toLocaleDateString(),
+          time = now.toLocaleTimeString('en-GB');
 
-  browser.windows.onCreated.addListener(() => {
-    const start = new Date();
-    if (number === 0) storageDate(start, true);
-    number++;
-    info(start);
-  });
+    open_date = date;
 
-  browser.windows.onRemoved.addListener(() => {
-    const end = new Date();
-    number--;
-    info(end);
-    if (number === 0) storageDate(end, false);
-  });
+    const bTime = item.bTime;
+    bTime[date] = bTime[date] || [];
+    bTime[date].push([time, time]);
+    return bsl.set({bTime});
+  }
+
+  storage(start);
+
+  function end(item) {
+    const bTime = item.bTime;
+    const now = new Date(),
+          date = now.toLocaleDateString(),
+          time = now.toLocaleTimeString('en-GB');
+
+    if (date === open_date) {
+      const bTimeE = bTime[date];
+      bTimeE[bTimeE.length - 1][1] = time;
+    } else {
+      const bTimeS = bTime[open_date];
+      bTimeS[bTimeS.length - 1][1] = '23:59:59';
+      bTime[date] = [['00:00:00', time]];
+      open_date = date;
+    }
+    return bsl.set({bTime});
+  }
+
+  const INTERVAL = 1000 * 60 * 1;
+  setInterval(storage(end), INTERVAL);
 })();
 
 (() => {
@@ -64,16 +86,15 @@ const onError = e => console.log(`Error: ${e}`);
     const curHost = match[1];
     if (ignoreHost(curHost)) return ;
 
-    browser.storage.local.get('url')
+    bsl.get('url')
       .then(item => {
-        const url = item.url || {};
+        const url = item.url;
         url[curHost] = url[curHost] || {};
 
         const hostObj = url[curHost];
-        hostObj.title = tabInfo.title;
         hostObj.times = hostObj.times + 1 || 1;
 
-        return browser.storage.local.set({url});
+        return bsl.set({url});
       })
       .catch(onError);
   });

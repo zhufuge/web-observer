@@ -25,7 +25,6 @@ class SiderContent extends React.Component {
           <div style={styles.title}>Web Observer</div>
         </div>
         <Menu
-          theme="light"
           onClick={this.handleClick}
           selectedKeys={[this.state.current]}
           inlineIndent={0}

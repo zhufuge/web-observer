@@ -1,43 +1,41 @@
 import React from 'react';
-import { Layout } from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+import { Layout, Menu, Icon } from 'antd';
+const { Footer, Sider, Content } = Layout;
 
-import moment from 'moment';
-
-import SiderContent from './components/SiderContent';
-import MainContent from './components/MainContent';
+import Display from './components/Display';
 
 export default
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tab: '1'
+      tab: 'display'
     };
     this.changeTab = this.changeTab.bind(this);
   }
-  changeTab(tab) {
-    this.setState({tab});
+  changeTab(e) {
+    this.setState({tab: e.key});
   }
   render() {
+    const content = this.state.tab === 'display' ? <Display /> : <div>setting</div>;
     return (
       <Layout style={{ height: '100%' }}>
-        <Header style={{ background: '#fff' }}></Header>
+        <header style={styles.header}>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <Icon type="eye" style={styles.eyeIcon}/>
+            <div style={styles.title}>Web Observer</div>
+          </div>
+          <Menu
+            style={{ position: 'absolut', bottom: 0 }}
+            onClick={this.changeTab}
+            selectedKeys={[this.state.tab]}
+            mode="horizontal">
+            <Menu.Item key="display" style={styles.item}>统计</Menu.Item>
+            <Menu.Item key="setting" style={styles.item}>设置</Menu.Item>
+          </Menu>
+        </header>
         <Content style={{ padding: '20px 50px' }}>
-          <Layout>
-            <Sider
-              breakpoint="lg"
-              collapsedWidth="0"
-              width={240}
-              style={{ background: '#fff' }}>
-              <SiderContent
-                tab={this.state.tab}
-                onSelected={this.changeTab}/>
-            </Sider>
-            <Content style={{ overflow: 'hidden' }}>
-              <MainContent tab={this.state.tab}/>
-            </Content>
-          </Layout>
+          {content}
         </Content>
         <Footer style={{ textAlign: 'center' }}>
           zhufuge ©2017
@@ -46,3 +44,26 @@ class App extends React.Component {
     );
   }
 }
+
+const styles = {
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'end',
+    minHeight: 64,
+    padding: '0 100px',
+    background: '#fff',
+  },
+  eyeIcon: {
+    fontSize: 48,
+    color: '#999',
+  },
+  title: {
+    margin: '0 0 8px 8px',
+    color: '#999',
+    fontSize: 24,
+  },
+  item: {
+    fontSize: 16
+  },
+};

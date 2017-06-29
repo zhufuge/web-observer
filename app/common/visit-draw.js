@@ -19,8 +19,7 @@ function extractTop(obj, max) {
   const labels = [], data = [];
   for (let item of items) {
     if (data.length === max) break;
-    const title = item[1].title;
-    labels.push([item[0], title]);
+    labels.push(item[0]);
     data.push(item[1].times);
   }
   return {labels, data};
