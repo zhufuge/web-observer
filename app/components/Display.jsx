@@ -1,25 +1,25 @@
-import React from 'react';
-import { Layout } from 'antd';
-const { Sider, Content } = Layout;
+import React from 'react'
+import { Layout } from 'antd'
+const { Sider, Content } = Layout
 
-import SiderContent from './SiderContent';
-import VisitItem from './VisitItem';
-import TimeItem from './TimeItem';
+import SiderContent from './SiderContent.jsx'
+import VisitItem from './VisitItem.jsx'
+import TimeItem from './TimeItem.jsx'
 
 export default
 class Display extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       tab: '1'
     };
-    this.changeTab = this.changeTab.bind(this);
+    this.changeTab = this.changeTab.bind(this)
   }
   changeTab(tab) {
-    this.setState({tab});
+    this.setState({tab})
   }
   render() {
-    const tab = this.state.tab === '1' ? <VisitItem /> : <TimeItem />;
+    const tab = this.state.tab === '1' ? <VisitItem /> : <TimeItem />
     return (
       <Layout>
         <Sider
@@ -37,7 +37,7 @@ class Display extends React.Component {
           </div>
         </Content>
       </Layout>
-    );
+    )
   }
 }
 
@@ -47,4 +47,4 @@ const styles = {
     padding: 30,
     width: '100%',
   },
-};
+}

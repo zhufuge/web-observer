@@ -1,7 +1,7 @@
-import React from 'react';
-import { Card } from 'antd';
+import React from 'react'
+import { Card } from 'antd'
 
-import visitDraw from '../common/visit-draw';
+import visitDraw from '../common/visit-draw'
 
 export default
 class FreqTab extends React.Component {
@@ -14,12 +14,12 @@ class FreqTab extends React.Component {
         <Card style={styles.card} title="访问时间 TOP10">
         </Card>
       </div>
-    );
+    )
   }
 }
 
 const styles = {
   card: {
     marginBottom: 20,
-  }
-};
+  },
+}

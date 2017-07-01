@@ -1,20 +1,20 @@
-import React from 'react';
-import { Icon, Menu } from 'antd';
-const Item = Menu.Item;
+import React from 'react'
+import { Icon, Menu } from 'antd'
+const Item = Menu.Item
 
 export default
 class SiderContent extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       current: props.tab
-    };
-    this.handleClick = this.handleClick.bind(this);
+    }
+    this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick(e) {
-    this.setState({current: e.key});
-    this.props.onSelected(e.key);
+    this.setState({current: e.key})
+    this.props.onSelected(e.key)
   }
 
   render() {
@@ -43,7 +43,7 @@ class SiderContent extends React.Component {
           </Item>
         </Menu>
       </div>
-    );
+    )
   }
 }
 
@@ -83,4 +83,4 @@ const styles = {
   icon: {
     fontSize: 26,
   },
-};
+}

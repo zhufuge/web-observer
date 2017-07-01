@@ -1,23 +1,23 @@
-import React from 'react';
-import { Layout, Menu, Icon } from 'antd';
-const { Footer, Sider, Content } = Layout;
+import React from 'react'
+import { Layout, Menu, Icon } from 'antd'
+const { Footer, Sider, Content } = Layout
 
-import Display from './components/Display';
+import Display from './components/Display.jsx'
 
 export default
 class App extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      tab: 'display'
-    };
-    this.changeTab = this.changeTab.bind(this);
+      tab: 'display',
+    }
+    this.changeTab = this.changeTab.bind(this)
   }
   changeTab(e) {
-    this.setState({tab: e.key});
+    this.setState({tab: e.key})
   }
   render() {
-    const content = this.state.tab === 'display' ? <Display /> : <div>setting</div>;
+    const content = this.state.tab === 'display' ? <Display /> : <div>setting</div>
     return (
       <Layout style={{ height: '100%' }}>
         <header style={styles.header}>
@@ -64,6 +64,6 @@ const styles = {
     fontSize: 24,
   },
   item: {
-    fontSize: 16
+    fontSize: 16,
   },
-};
+}

@@ -1,29 +1,29 @@
-import React from 'react';
-import { DatePicker, Card, Col, Row } from 'antd';
-import moment from 'moment';
+import React from 'react'
+import { DatePicker, Card, Col, Row } from 'antd'
+import moment from 'moment'
 
-import timeDraw from '../common/time-draw';
+import timeDraw from '../common/time-draw'
 
 export default
 class TimeTab extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       date: moment(new Date()).format('YYYY/M/D')
-    };
+    }
   }
 
   componentDidMount() {
     if (this.refs['c2']) {
-      const { c1, c2 } = this.refs;
-      timeDraw(c1, c2, this.state.date);
+      const { c1, c2 } = this.refs
+      timeDraw(c1, c2, this.state.date)
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.date != this.state.date) {
-      const { c1, c2 } = this.refs;
-      timeDraw(c1, c2, this.state.date);
+      const { c1, c2 } = this.refs
+      timeDraw(c1, c2, this.state.date)
     }
   }
 
@@ -57,7 +57,7 @@ class TimeTab extends React.Component {
         <Card style={styles.card} title="一周情况">
         </Card>
       </div>
-    );
+    )
   }
 }
 
@@ -71,4 +71,4 @@ const styles = {
     fontSize: 20,
     marginTop: 20,
   },
-};
+}
