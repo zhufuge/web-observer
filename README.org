@@ -1,0 +1,32 @@
+* [[./extension/icons/watch-48.png]] web-observer
+
+A add-ons that observe what you are browsing for Firefox. 
+
+** Introduction
+*** Function
+    - report the time of browser that open to close
+    - report the visit-times of websit that you visit
+
+** Development
+
+*** Install
+#+BEGIN_SRC sh
+  $ npm init
+  $ npm run build
+#+END_SRC
+
+*** Test
+    To install add-on temporarily for test:
+    - open Firefox
+    - enter "about:debugging" in the URL bar
+    - click "Load Temporary Add-on"
+    - open the add-on's directory *./extension* and select *./manifest.json*
+
+   [[https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Temporary_Installation_in_Firefox][Guide]] 
+
+** Usage
+   It has not publish yet.
+
+   So, you want to install it into my firefox, you have to submit it to [[https://addons.mozilla.org][AMO]].
+
+   [[https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Publishing_your_WebExtension][Guide]]
